@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>男同性恋淫荡程度综合测评系统</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Noto Sans SC (作为核心降级字体) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Sans Webfont CDN (优先英文字体) -->
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/google-sans">
+    <!-- MiSans Webfont CDN (优先中文字体) -->
+    <link rel="stylesheet" href="https://font.sec.miui.com/font/css?family=MiSans:300,400,500,600,700:Chinese_Simplify,Latin&display=swap">
+
+    <style>
+        /* 本地及预置字体声明 */
+        @font-face {
+            font-family: 'Google Sans';
+            src: local('Google Sans Regular'), local('Google Sans'), local('GoogleSans-Regular');
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'MiSans';
+            src: local('MiSans Regular'), local('MiSans'), local('MiSans-Regular');
+            font-display: swap;
+        }
+
+        :root {
+            --pride-gradient: linear-gradient(90deg, #E40303 0%, #FF8C00 16.6%, #FFED00 33.3%, #008026 50%, #24408E 66.6%, #732982 83.3%, #E40303 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 强制全局继承指定字体族：'Google Sans', Inter, MiSans, 'Noto Sans SC', sans-serif */
+        *, html, body, button, input, select, textarea, div, span, p, h1, h2, h3, h4, h5, h6 {
+            font-family: 'Google Sans', Inter, MiSans, 'Noto Sans SC', sans-serif !important;
+        }
+
+        /* 彻底消除等宽样式(monospace)在Windows系统上将中文字符意外回退至宋体(SimSun)的问题 */
+        .font-mono, code, kbd, samp, pre {
+            font-family: 'Google Sans', Inter, MiSans, 'Noto Sans SC', ui-monospace, monospace !important;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* 纯黑背景 + 直角 + 低模糊高透光玻璃质感 */
+        .glass-panel {
+            background-color: rgba(14, 14, 16, 0.55);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 0px !important; /* 强制直角风格 */
+        }
+
+        .glass-panel-subtle {
+            background-color: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0px !important;
+        }
+
+        .pride-bar {
+            background: var(--pride-gradient);
+            background-size: 200% auto;
+            animation: prideFlow 8s linear infinite;
+        }
+
+        .pride-text {
+            background: var(--pride-gradient);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: prideFlow 8s linear infinite;
+        }
+
+        @keyframes prideFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* iOS/macOS 平滑淡入淡出 + 高斯模糊切换动画 */
+        .ios-blur-fade-enter {
+            animation: iosBlurEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .ios-blur-fade-exit {
+            animation: iosBlurExit 0.3s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+        }
+
+        @keyframes iosBlurEnter {
+            0% {
+                opacity: 0;
+                filter: blur(14px);
+                transform: translateY(12px) scale(0.99);
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0px);
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes iosBlurExit {
+            0% {
+                opacity: 1;
+                filter: blur(0px);
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                filter: blur(14px);
+                transform: translateY(-12px) scale(0.99);
+            }
+        }
+
+        /* 隐藏默认滚动条保持极简 */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+        }
+    </style>
+</head>
+<body class="bg-[#08080a] text-neutral-100 min-h-screen selection:bg-white selection:text-black flex flex-col justify-between relative overflow-x-hidden">
+
+    <!-- 顶部彩虹PRIDE动态装饰光带 -->
+    <div class="fixed top-0 left-0 right-0 h-[3px] pride-bar z-50"></div>
+
+    <!-- 背景暗光氛围（微弱彩虹光晕） -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute -top-[20%] left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-r from-red-600/10 via-amber-500/10 via-emerald-500/10 via-blue-600/10 to-purple-600/10 blur-[130px] rounded-full"></div>
+        <div class="absolute -bottom-[20%] right-[-10%] w-[500px] h-[400px] bg-purple-600/5 blur-[120px] rounded-full"></div>
+    </div>
+
+    <!-- 全局页面容器 -->
+    <div class="relative z-10 w-full max-w-3xl mx-auto px-4 py-8 md:py-14 flex-1 flex flex-col justify-center">
+
+        <!-- 页面顶部品牌徽标与标头 -->
+        <header class="mb-8 text-center flex flex-col items-center">
+            <div class="inline-flex items-center gap-2 border border-white/15 px-3 py-1 bg-white/[0.04] backdrop-blur-md mb-4 text-xs tracking-widest uppercase text-neutral-400">
+                <span class="w-1.5 h-1.5 pride-bar inline-block"></span>
+                <span>LGBTQ+ Assessment Platform</span>
+                <span class="w-1.5 h-1.5 pride-bar inline-block"></span>
+            </div>
+            <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-white mb-2">
+                男同性恋淫荡程度综合测评系统
+            </h1>
+            <p class="text-xs md:text-sm text-neutral-400 font-light max-w-xl mx-auto">
+                Adult Queer Psychosexual Spectrum Analysis & Playfulness Quotient
+            </p>
+        </header>
+
+        <!-- 阶段 1：初始欢迎与说明界面 -->
+        <section id="intro-screen" class="glass-panel p-6 md:p-10 shadow-2xl relative transition-all duration-300">
+            <!-- 四角标角装饰增强直角工业质感 -->
+            <div class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-white"></div>
+            <div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-white"></div>
+            <div class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-white"></div>
+            <div class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-white"></div>
+
+            <div class="border-b border-white/10 pb-6 mb-6">
+                <span class="text-xs uppercase tracking-widest text-neutral-400">Overview / 前言导语</span>
+                <p class="mt-3 text-neutral-200 leading-relaxed text-sm md:text-base font-normal">
+                    本测评专为成人同志群体设计，旨在衡量你的性欲望、探索度、玩乐尺度及对肉体自由的接受度。
+                </p>
+            </div>
+
+            <!-- 规则及计分简述 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+                <div class="glass-panel-subtle p-4">
+                    <div class="text-neutral-400 text-xs tracking-wider mb-1"><span class="tabular-nums">01</span> / 题量体系</div>
+                    <div class="text-white font-medium text-sm">25 道深度行为题</div>
+                    <div class="text-neutral-400 text-xs mt-1">覆盖社交、欲望与野性玩法</div>
+                </div>
+                <div class="glass-panel-subtle p-4">
+                    <div class="text-neutral-400 text-xs tracking-wider mb-1"><span class="tabular-nums">02</span> / 积分逻辑</div>
+                    <div class="text-white font-medium text-sm">A:0 / B:2 / C:4 / D:6</div>
+                    <div class="text-neutral-400 text-xs mt-1">最高 150 分梯级标定</div>
+                </div>
+                <div class="glass-panel-subtle p-4">
+                    <div class="text-neutral-400 text-xs tracking-wider mb-1"><span class="tabular-nums">03</span> / 隐私保护</div>
+                    <div class="text-white font-medium text-sm">本地计算零上报</div>
+                    <div class="text-neutral-400 text-xs mt-1">所有数据均在浏览器处理</div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4 pt-2">
+                <button id="btn-start" class="w-full sm:w-auto flex-1 bg-white hover:bg-neutral-200 text-black font-semibold text-sm py-4 px-8 tracking-wider transition-all duration-200 active:scale-[0.99] flex items-center justify-center gap-2">
+                    <span>开始测评</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- 阶段 2：做题主界面（默认隐藏） -->
+        <section id="quiz-screen" class="hidden glass-panel p-6 md:p-10 shadow-2xl relative">
+            <div class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-white"></div>
+            <div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-white"></div>
+            <div class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-white"></div>
+            <div class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-white"></div>
+
+            <!-- 顶部进度与导航 -->
+            <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+                <div class="flex items-center gap-3">
+                    <button id="btn-prev" class="text-xs uppercase tracking-wider text-neutral-400 hover:text-white px-2 py-1 border border-white/10 hover:border-white/30 transition-colors disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                        <span>上一题</span>
+                    </button>
+                    <span id="question-counter" class="text-xs tracking-widest text-neutral-400 tabular-nums font-medium">01 / 25</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-24 md:w-36 h-[3px] bg-neutral-800 overflow-hidden">
+                        <div id="progress-bar-fill" class="h-full pride-bar transition-all duration-300 w-[4%]"></div>
+                    </div>
+                    <span id="progress-percent" class="text-xs tabular-nums text-neutral-500 w-9 text-right font-medium">4%</span>
+                </div>
+            </div>
+
+            <!-- 题目容器（带平滑高斯模糊切换动效） -->
+            <div id="question-anim-wrapper" class="ios-blur-fade-enter">
+                <div class="mb-6">
+                    <div class="text-[11px] uppercase text-neutral-400 tracking-wider mb-2 font-medium">Question</div>
+                    <h2 id="question-text" class="text-lg md:text-xl font-semibold text-white tracking-tight leading-snug">
+                        1. 你平时的打飞机频率大概是？
+                    </h2>
+                </div>
+
+                <!-- 选项列表 -->
+                <div id="options-container" class="space-y-3 mb-6">
+                    <!-- 动态注入选项 -->
+                </div>
+            </div>
+
+            <!-- 底部提示与跳题辅助 -->
+            <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-neutral-400 tracking-wide">
+                <span>单项选择 · 点击自动进入下一题</span>
+                <span id="score-accumulator" class="text-neutral-300 tabular-nums">实时累计: 0 PTS</span>
+            </div>
+        </section>
+
+        <!-- 阶段 3：严格符合要求的结果展示页面 -->
+        <section id="result-screen" class="hidden glass-panel p-6 md:p-10 shadow-2xl relative">
+            <div class="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-white"></div>
+            <div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-white"></div>
+            <div class="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-white"></div>
+            <div class="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-white"></div>
+
+            <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-8">
+                <span class="text-xs uppercase tracking-widest text-neutral-400">Assessment Result / 综合测评报告</span>
+                <span class="text-xs pride-text uppercase font-semibold tracking-wider">Verified System Output</span>
+            </div>
+
+            <!-- 按照规定排版结构的输出区域：
+                [分数文本]
+                [层次]
+                ---
+                [总结]
+            -->
+            <div class="glass-panel-subtle p-6 md:p-8 border border-white/20 relative mb-8">
+                <!-- 纯净结构：[分数文本] -->
+                <div class="mb-3">
+                    <div class="text-xs uppercase text-neutral-400 mb-1 tracking-wider">综合总分</div>
+                    <div id="result-score-text" class="text-4xl md:text-5xl font-bold tracking-tight text-white tabular-nums">
+                        <!-- 分数文本例如：96 / 150 分 -->
+                    </div>
+                </div>
+
+                <!-- 纯净结构：[层次] -->
+                <div class="mb-5">
+                    <div class="text-xs uppercase text-neutral-400 mb-1 tracking-wider">等级层次</div>
+                    <div id="result-tier-text" class="text-xl md:text-2xl font-bold pride-text tracking-wide">
+                        <!-- 层次例如：第四档：火力全开骚断腿 / 派对焦点收割机 -->
+                    </div>
+                </div>
+
+                <!-- 纯净结构：--- 分割线 -->
+                <hr class="border-t border-white/20 my-6">
+
+                <!-- 纯净结构：[总结] -->
+                <div>
+                    <div class="text-xs uppercase text-neutral-400 mb-2 tracking-wider">特征评价总结</div>
+                    <div id="result-summary-text" class="text-sm md:text-base text-neutral-300 leading-relaxed font-normal whitespace-pre-line text-justify">
+                        <!-- 总结特征评价文本 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 档位总览全景标尺 -->
+            <div class="mb-8 border border-white/10 p-4 bg-white/[0.02]">
+                <div class="text-xs uppercase text-neutral-400 mb-3 flex items-center justify-between">
+                    <span>欲望梯级分布 (Spectrum Level)</span>
+                    <span id="tier-rank-badge" class="px-2 py-0.5 text-[11px] bg-white text-black font-semibold">Level 1</span>
+                </div>
+                <div class="grid grid-cols-5 gap-1 text-center tabular-nums text-[10px] text-neutral-400 mb-2 tracking-wider">
+                    <div>0-30</div>
+                    <div>31-60</div>
+                    <div>61-90</div>
+                    <div>91-120</div>
+                    <div>121-150</div>
+                </div>
+                <div class="h-2 w-full bg-neutral-900 flex overflow-hidden">
+                    <div id="spec-1" class="h-full flex-1 border-r border-black/40 transition-colors"></div>
+                    <div id="spec-2" class="h-full flex-1 border-r border-black/40 transition-colors"></div>
+                    <div id="spec-3" class="h-full flex-1 border-r border-black/40 transition-colors"></div>
+                    <div id="spec-4" class="h-full flex-1 border-r border-black/40 transition-colors"></div>
+                    <div id="spec-5" class="h-full flex-1 transition-colors"></div>
+                </div>
+            </div>
+
+            <!-- 功能操作栏 -->
+            <div class="flex flex-col sm:flex-row items-center gap-3">
+                <button id="btn-export-image" class="w-full sm:flex-1 bg-white hover:bg-neutral-200 text-black text-sm font-semibold py-3.5 px-5 tracking-wide transition-all duration-200 flex items-center justify-center gap-2 active:scale-[0.99]">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span id="btn-export-text">导出海报 (2160×3840 JPG)</span>
+                </button>
+                <button id="btn-copy-result" class="w-full sm:w-auto border border-white/20 hover:border-white text-white text-sm font-medium py-3.5 px-5 tracking-wide transition-all duration-200 flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
+                    <span>复制文本</span>
+                </button>
+                <button id="btn-restart" class="w-full sm:w-auto border border-white/20 hover:border-white text-neutral-400 hover:text-white text-sm font-medium py-3.5 px-5 transition-all duration-200">
+                    重新测试
+                </button>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 底部状态与版权 -->
+    <footer class="relative z-10 w-full text-center py-6 border-t border-white/5 text-[11px] text-neutral-500 tracking-wider">
+        <p>© 2026 男同性恋淫荡程度综合测评系统 · PRIDE SPECTRUM ANALYSIS</p>
+        <p class="mt-1">尊重多元性取向 · 倡导知情同意与身心健康安全</p>
+    </footer>
+
+    <!-- 高清海报预览及保存浮层（方便移动端长按保存） -->
+    <div id="poster-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex flex-col items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-lg p-5 flex flex-col max-h-[92vh] relative border border-white/20 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-3 shrink-0">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 pride-bar inline-block"></span>
+                    <span class="text-xs uppercase font-semibold text-white tracking-wider">2160×3840 JPG 海报已就绪</span>
+                </div>
+                <button id="btn-close-modal" class="text-neutral-400 hover:text-white p-1 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            
+            <p class="text-xs text-neutral-400 mb-3 shrink-0">
+                已自动触发文件下载。移动端用户亦可直接<span class="text-white font-medium">长按下方图片</span>保存到手机相册。
+            </p>
+
+            <!-- 海报缩放预览容器 -->
+            <div class="flex-1 overflow-auto bg-black/60 p-2 flex items-center justify-center border border-white/10">
+                <img id="poster-preview-img" alt="测评结果海报预览" class="max-h-[60vh] w-auto object-contain border border-white/20 shadow-lg">
+            </div>
+
+            <div class="flex gap-3 mt-4 shrink-0">
+                <button id="btn-download-again" class="flex-1 bg-white hover:bg-neutral-200 text-black text-xs font-semibold py-3 transition-colors text-center tracking-wide">
+                    再次触发下载 JPG
+                </button>
+                <button id="btn-dismiss-modal" class="px-5 border border-white/20 hover:border-white text-white text-xs font-medium py-3 transition-colors">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 自定义非侵入式 Toast 弹窗（严禁使用原生 alert()） -->
+    <div id="toast-message" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 transition-opacity duration-300">
+        <div class="bg-white text-black px-5 py-2.5 shadow-2xl text-xs font-semibold tracking-wider flex items-center gap-2 border border-white">
+            <span class="w-2 h-2 pride-bar inline-block"></span>
+            <span id="toast-text">结果已复制到剪贴板</span>
+        </div>
+    </div>
+
+    <script>
+        // 25 道测评题目完整数据源（严格映射 A:0分, B:2分, C:4分, D:6分）
+        const quizData = [
+            {
+                id: 1,
+                question: "1. 你平时的打飞机频率大概是？",
+                options: [
+                    { label: "A", text: "几乎不，两周以上一次甚至更少", score: 0 },
+                    { label: "B", text: "每周1-2次，纯粹为了泄火", score: 2 },
+                    { label: "C", text: "平均每天1次，睡前固定仪式", score: 4 },
+                    { label: "D", text: "一天2次以上，只要有空就想来一发", score: 6 }
+                ]
+            },
+            {
+                id: 2,
+                question: "2. 你的日常性幻想丰富程度如何？",
+                options: [
+                    { label: "A", text: "很少幻想，基本处于贤者模式", score: 0 },
+                    { label: "B", text: "偶尔在看帅哥或者看成人片时联想", score: 2 },
+                    { label: "C", text: "经常幻想特定场景，如健身房更衣室、办公室", score: 4 },
+                    { label: "D", text: "脑内无时无刻不在自动编写不可描述的剧情，随时能起反应", score: 6 }
+                ]
+            },
+            {
+                id: 3,
+                question: "3. 关于日常不穿内裤（真空出行），你的态度或习惯是？",
+                options: [
+                    { label: "A", text: "从不，没有安全感", score: 0 },
+                    { label: "B", text: "仅在夏天穿宽松短裤或下楼拿快递时偶尔真空", score: 2 },
+                    { label: "C", text: "经常真空去健身房或出门，享受若隐若现的轮廓感", score: 4 },
+                    { label: "D", text: "衣柜里基本没有正经内裤，常年真空或只穿开裆、丁字裤", score: 6 }
+                ]
+            },
+            {
+                id: 4,
+                question: "4. 在交友软件上，你对待互发私密照片的频率是？",
+                options: [
+                    { label: "A", text: "坚决不发，也反感别人发", score: 0 },
+                    { label: "B", text: "聊得非常投机、建立信任后才考虑互换", score: 2 },
+                    { label: "C", text: "只要对方合眼缘，打个招呼就直接甩腹肌或内裤照", score: 4 },
+                    { label: "D", text: "相册里常备各角度精修私密照，甚至原图直出毫无心理负担", score: 6 }
+                ]
+            },
+            {
+                id: 5,
+                question: "5. 面对陌生人突然发来的大尺度私密照，你的第一反应是？",
+                options: [
+                    { label: "A", text: "感觉被冒犯，直接拉黑举报", score: 0 },
+                    { label: "B", text: "皱眉头划过去，视而不见", score: 2 },
+                    { label: "C", text: "默默放大审阅打分，身材好的话顺手保存", score: 4 },
+                    { label: "D", text: "兴奋地立刻回敬一张自己更大尺度的照片进行斗图", score: 6 }
+                ]
+            },
+            {
+                id: 6,
+                question: "6. 你的交友软件（Blued、Grindr等）在线状态通常是？",
+                options: [
+                    { label: "A", text: "很久才登录一次，甚至没装", score: 0 },
+                    { label: "B", text: "偶尔无聊上去刷刷动态，很少主动约", score: 2 },
+                    { label: "C", text: "每天挂着，猎物出现就快速出击", score: 4 },
+                    { label: "D", text: "多个软件同时后台常驻，定位全球漫游随时物色", score: 6 }
+                ]
+            },
+            {
+                id: 7,
+                question: "7. 在推特（X）等社交平台上，你是否有小号或黄推属性？",
+                options: [
+                    { label: "A", text: "只有大号，且内容非常阳光正能量", score: 0 },
+                    { label: "B", text: "有纯浏览小号，只看不发", score: 2 },
+                    { label: "C", text: "有小号，偶尔发身材照、擦边动态或性话题", score: 4 },
+                    { label: "D", text: "是资深推特博主，定期更新大尺度照片甚至原创小视频", score: 6 }
+                ]
+            },
+            {
+                id: 8,
+                question: "8. 关于在公共场所小范围暴露或走光，你的接受程度是？",
+                options: [
+                    { label: "A", text: "极度排斥，穿戴严严实实", score: 0 },
+                    { label: "B", text: "仅接受在海滩或泳池边穿紧身三角泳裤", score: 2 },
+                    { label: "C", text: "喜欢穿微透、低腰裤隐约露毛或露出丁字裤边", score: 4 },
+                    { label: "D", text: "体验过或极其渴望在试衣间、楼梯间、野外短暂脱光", score: 6 }
+                ]
+            },
+            {
+                id: 9,
+                question: "9. 对于在非常规场所（如汽车后座、影院后排、公园树林）发生关系的态度是？",
+                options: [
+                    { label: "A", text: "完全不能接受，必须在私密干净的室内大床", score: 0 },
+                    { label: "B", text: "理智上排斥，但特殊氛围下可能勉强同意", score: 2 },
+                    { label: "C", text: "觉得非常刺激，有过尝试且回味无穷", score: 4 },
+                    { label: "D", text: "户外/巡游老手，越容易被发现越兴奋", score: 6 }
+                ]
+            },
+            {
+                id: 10,
+                question: "10. 你参与或接受多人性爱（3P及以上）的程度是？",
+                options: [
+                    { label: "A", text: "绝对排斥，只能接受一对一", score: 0 },
+                    { label: "B", text: "脑海中幻想过，但实际操作不敢", score: 2 },
+                    { label: "C", text: "尝试过3P或4P，感觉开启了新大门", score: 4 },
+                    { label: "D", text: "经常参加多人局、群交派对或深渊局，人越多越尽兴", score: 6 }
+                ]
+            },
+            {
+                id: 11,
+                question: "11. 关于拍摄自己参与的性爱视频，你的看法是？",
+                options: [
+                    { label: "A", text: "严禁拍摄，这是不可触碰的红线", score: 0 },
+                    { label: "B", text: "仅在完全不露脸的前提下偶尔配合对方", score: 2 },
+                    { label: "C", text: "手机隐藏相册里存有不少自己作为主角的高清视频", score: 4 },
+                    { label: "D", text: "乐于拍摄并收藏，甚至愿意在特定私密圈子内分享交流", score: 6 }
+                ]
+            },
+            {
+                id: 12,
+                question: "12. 你对性玩具、情趣用品的依赖或持有情况是？",
+                options: [
+                    { label: "A", text: "纯天然派，零道具", score: 0 },
+                    { label: "B", text: "只有基础润滑剂和一两个普通后庭塞", score: 2 },
+                    { label: "C", text: "拥有前列腺按摩器、锁精环、拘束带等多样化装备", score: 4 },
+                    { label: "D", text: "家里堪比成人用品专卖店，出门旅行必带重型装备", score: 6 }
+                ]
+            },
+            {
+                id: 13,
+                question: "13. 你对特殊性癖好（如气味控、恋足、胶衣、皮具等）的接纳度是？",
+                options: [
+                    { label: "A", text: "无法理解，感觉奇怪", score: 0 },
+                    { label: "B", text: "能理解别人，但自己毫无兴趣", score: 2 },
+                    { label: "C", text: "自己有1-2个特定癖好，遇到同好会很兴奋", score: 4 },
+                    { label: "D", text: "涉猎广泛，各种小众Kink都能玩得风生水起", score: 6 }
+                ]
+            },
+            {
+                id: 14,
+                question: "14. 在软件上认识新人，从破冰聊天到直接上床的最快速度是？",
+                options: [
+                    { label: "A", text: "必须先约会了解几周甚至几个月", score: 0 },
+                    { label: "B", text: "至少要喝杯咖啡、看个电影聊个几天", score: 2 },
+                    { label: "C", text: "当晚见面，两三杯酒下肚就直接去酒店", score: 4 },
+                    { label: "D", text: "查水表式报完数据，十五分钟内闪送上门", score: 6 }
+                ]
+            },
+            {
+                id: 15,
+                question: "15. 截止目前，你大致的性伴侣数量区间是？",
+                options: [
+                    { label: "A", text: "0-2人", score: 0 },
+                    { label: "B", text: "3-10人", score: 2 },
+                    { label: "C", text: "11-30人", score: 4 },
+                    { label: "D", text: "30人以上，已经数不清了", score: 6 }
+                ]
+            },
+            {
+                id: 16,
+                question: "16. 在同志酒吧、派对或巡游活动中，你的行为尺度是？",
+                options: [
+                    { label: "A", text: "坐在角落安静喝酒，有人搭讪都很拘谨", score: 0 },
+                    { label: "B", text: "跟着音乐晃动，偶尔和帅哥眼神拉丝", score: 2 },
+                    { label: "C", text: "脱掉上衣贴身热舞，接受甚至主动摸胸腹肌", score: 4 },
+                    { label: "D", text: "派对焦点，现场湿吻、甚至在卡座或暗处上下其手", score: 6 }
+                ]
+            },
+            {
+                id: 17,
+                question: "17. 你涉足或了解同志暗室/桑拿房的经历是？",
+                options: [
+                    { label: "A", text: "从未去过，觉得那种地方很脏很乱", score: 0 },
+                    { label: "B", text: "听说过很好奇，但不敢独自前往", score: 2 },
+                    { label: "C", text: "去过几次体验氛围，摸过或被摸过", score: 4 },
+                    { label: "D", text: "资深常客，熟悉各大城市暗室玩法，享受黑暗中的匿名肉欲", score: 6 }
+                ]
+            },
+            {
+                id: 18,
+                question: "18. 在床上的角色认知与体位探索方面，你是？",
+                options: [
+                    { label: "A", text: "角色固定（纯1或纯0），动作单一保守", score: 0 },
+                    { label: "B", text: "角色基本固定，但愿意配合对方尝试换几个体位", score: 2 },
+                    { label: "C", text: "喜欢根据对方身材随时切换攻受角色（多面手）", score: 4 },
+                    { label: "D", text: "角色完全无界限，喜欢开发各类高难度反常规玩法", score: 6 }
+                ]
+            },
+            {
+                id: 19,
+                question: "19. 对于性爱过程中的粗话（Dirty Talk），你的态度是？",
+                options: [
+                    { label: "A", text: "讨厌粗俗语言，必须保持安静或温情", score: 0 },
+                    { label: "B", text: "接受轻微的情话或喘息声", score: 2 },
+                    { label: "C", text: "喜欢对方用带侵略性的语言羞辱或赞美自己", score: 4 },
+                    { label: "D", text: "没有粗话完全不能高潮，自己也是出口成章的调情大师", score: 6 }
+                ]
+            },
+            {
+                id: 20,
+                question: "20. 遇到非常合眼缘的陌生帅哥时，你的肢体语言通常是？",
+                options: [
+                    { label: "A", text: "害羞低头，假装没看见", score: 0 },
+                    { label: "B", text: "偷偷看几眼，眼神对视瞬间移开", score: 2 },
+                    { label: "C", text: "直勾勾对视并微笑，散发明确的荷尔蒙信号", score: 4 },
+                    { label: "D", text: "主动上前搭话、轻微肢体触碰，直接要联系方式", score: 6 }
+                ]
+            },
+            {
+                id: 21,
+                question: "21. 与同圈子闺蜜/好友聚会时，你分享性细节的尺度是？",
+                options: [
+                    { label: "A", text: "闭口不谈，觉得这是个人隐私", score: 0 },
+                    { label: "B", text: "仅吐槽情感问题，不聊床事细节", score: 2 },
+                    { label: "C", text: "会聊对方的尺寸、技术和时长", score: 4 },
+                    { label: "D", text: "毫无保留，连体位、姿势、私处细节和叫床声都能生动复述", score: 6 }
+                ]
+            },
+            {
+                id: 22,
+                question: "22. 你对角色扮演（如师生、医生病人、警察小偷、主奴）的兴趣是？",
+                options: [
+                    { label: "A", text: "觉得尴尬出戏，完全提不起劲", score: 0 },
+                    { label: "B", text: "仅限于偶尔换个职业装调调情", score: 2 },
+                    { label: "C", text: "乐于尝试剧本设定，有专门的COS服装", score: 4 },
+                    { label: "D", text: "骨灰级戏精，设定完整剧情和惩罚规则，沉浸式开战", score: 6 }
+                ]
+            },
+            {
+                id: 23,
+                question: "23. 你尝试过视频性爱（Cam Sex）或连麦自慰吗？",
+                options: [
+                    { label: "A", text: "从未尝试，觉得面对屏幕很滑稽", score: 0 },
+                    { label: "B", text: "曾经异地恋时被迫尝试过一两次", score: 2 },
+                    { label: "C", text: "偶尔在网络上找同好进行屏幕互动", score: 4 },
+                    { label: "D", text: "经常开视频自慰互撸，甚至面对镜头展现全身细节毫无羞怯", score: 6 }
+                ]
+            },
+            {
+                id: 24,
+                question: "24. 你对自己的肉体和性吸引力有多大自信？",
+                options: [
+                    { label: "A", text: "极度自卑，脱衣服一定要关灯", score: 0 },
+                    { label: "B", text: "一般，只有在对方夸奖时才有点自信", score: 2 },
+                    { label: "C", text: "相当自信，知道自己的哪部分最迷人并善于展示", score: 4 },
+                    { label: "D", text: "极度自恋，认为自己的肉体就是为了被观赏和崇拜而生的", score: 6 }
+                ]
+            },
+            {
+                id: 25,
+                question: "25. 总体而言，你怎么看待男同性恋群体内部的性欲望与狂欢？",
+                options: [
+                    { label: "A", text: "觉得很多人太浮躁泛滥，应该回归传统纯爱", score: 0 },
+                    { label: "B", text: "性很重要，但必须严格与道德、感情捆绑", score: 2 },
+                    { label: "C", text: "成年人知情同意下的肉欲狂欢无可厚非，各取所需", score: 4 },
+                    { label: "D", text: "人生苦短及时行乐，肉体自由是同志天性中最值得赞美的部分", score: 6 }
+                ]
+            }
+        ];
+
+        // 5 个等级划分配置，提前固定好映射结果
+        const tierDefinitions = [
+            {
+                level: 1,
+                minScore: 0,
+                maxScore: 30,
+                tierName: "第一档：禁欲系小白兔 / 纯爱修道士",
+                summary: "你在同志圈中简直是一股罕见的清流。对于肉体欲望，你有极高的道德克制力或天然的低欲望阈值。你重视精神共鸣远胜于肉体欢愉，对交友软件上的快餐文化、大尺度行为感到不适甚至厌恶。性对你来说是深厚情感的附赠品，而非独立的游戏。在这个浮躁的时代，你的纯洁与谨慎是一道独特的风景线，但也别把心防筑得太高，适度探索也许能发现不一样的乐趣。"
+            },
+            {
+                level: 2,
+                minScore: 31,
+                maxScore: 60,
+                tierName: "第二档：循规蹈矩邻家男 / 慢热保守派",
+                summary: "你对性持有健康的欲望，但行为上依然严守边界。你会打飞机，也会在交友软件上划划帅哥，但绝不会轻易迈出越界的那一步。你喜欢干净、私密、有安全感的亲密关系，对于野战、多人运动、拍视频等先锋玩法敬而远之。你是一只温顺的小猫，只有在遇到完全信任、给予你十足安全感的伴侣时，你才会试探性地展现出自己隐藏的小骚动。"
+            },
+            {
+                level: 3,
+                minScore: 61,
+                maxScore: 90,
+                tierName: "第三档：风情自如轻熟派 / 进退有度懂王",
+                summary: "恭喜你，达到了基圈大多数成熟玩家的黄金平衡点。你深谙身体的快乐法则，既懂纯爱的美好，也玩得转成年人的荷尔蒙游戏。你对自己的身材和欲望坦荡面对，偶有野战或角色扮演的尝试，但始终有自己的底线和安全意识。你知道什么时候该当阳光正经的好青年，也知道关上门后如何成为让人神魂颠倒的尤物。你既不滥情也不压抑，属于性商（SQ）极高的高级玩家。"
+            },
+            {
+                level: 4,
+                minScore: 91,
+                maxScore: 120,
+                tierName: "第四档：火力全开骚断腿 / 派对焦点收割机",
+                summary: "你的身上流淌着纯正的骚动荷尔蒙。你不仅接受度极高，更是圈内各类猎奇玩法的积极探索者。真空出行、大尺度私密照互换、派对暗室对你而言不过是常规操作。你深知如何利用自己的眼神、肉体和语言去狩猎猎物，床上的每一寸空间都是你施展魅力的舞台。你极度自信且敢作敢当，只要身体扛得住，快乐永远不打烊。你是每一个深夜局里大家最想推倒的存在。"
+            },
+            {
+                level: 5,
+                minScore: 121,
+                maxScore: 150,
+                tierName: "第五档：肉欲神明大魔王 / 殿堂级绝世魅魔",
+                summary: "你的淫荡指数已经突破天际，肉体的道德禁锢对你毫无意义。你已经彻底将欲望升华成了一种生活哲学与行为艺术。多人群交、户外露出、暗室巡游、原创小视频……世间常规玩法早已满足不了你浩瀚的欲望黑洞。你不仅自己玩得野，还能轻易带偏身边所有纯良小男生。你是夜色中最耀眼的堕落天使，所过之处，荷尔蒙寸草不生。唯一需要提醒你的是：狂欢之余，务必按时做好身体检测与安全防护，保护好自己才能持续当魔王。"
+            }
+        ];
+
+        // 应用核心状态
+        let currentIndex = 0;
+        let userAnswers = new Array(quizData.length).fill(null);
+        let isTransitioning = false;
+
+        // DOM 元素引用
+        const introScreen = document.getElementById("intro-screen");
+        const quizScreen = document.getElementById("quiz-screen");
+        const resultScreen = document.getElementById("result-screen");
+        const animWrapper = document.getElementById("question-anim-wrapper");
+        const questionText = document.getElementById("question-text");
+        const optionsContainer = document.getElementById("options-container");
+        const questionCounter = document.getElementById("question-counter");
+        const progressBarFill = document.getElementById("progress-bar-fill");
+        const progressPercent = document.getElementById("progress-percent");
+        const scoreAccumulator = document.getElementById("score-accumulator");
+        const btnPrev = document.getElementById("btn-prev");
+        const btnStart = document.getElementById("btn-start");
+        const btnCopyResult = document.getElementById("btn-copy-result");
+        const btnRestart = document.getElementById("btn-restart");
+        const toastEl = document.getElementById("toast-message");
+        const toastText = document.getElementById("toast-text");
+
+        const btnExportImage = document.getElementById("btn-export-image");
+        const btnExportText = document.getElementById("btn-export-text");
+        const posterModal = document.getElementById("poster-modal");
+        const posterPreviewImg = document.getElementById("poster-preview-img");
+        const btnCloseModal = document.getElementById("btn-close-modal");
+        const btnDismissModal = document.getElementById("btn-dismiss-modal");
+        const btnDownloadAgain = document.getElementById("btn-download-again");
+
+        let currentPosterBlob = null;
+        let currentPosterDataUrl = null;
+        let cachedResultData = null;
+
+        function renderQuestion(index) {
+            const currentItem = quizData[index];
+            questionText.textContent = currentItem.question;
+            questionCounter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(quizData.length).padStart(2, '0')}`;
+            
+            // 进度条百分比
+            const pct = Math.round(((index + 1) / quizData.length) * 100);
+            progressBarFill.style.width = `${pct}%`;
+            progressPercent.textContent = `${pct}%`;
+
+            // 当前累计分数
+            const currentScore = userAnswers.reduce((sum, item) => sum + (item !== null ? item.score : 0), 0);
+            scoreAccumulator.textContent = `实时累计: ${currentScore} PTS`;
+
+            // 上一题按钮状态
+            btnPrev.disabled = (index === 0);
+
+            // 清空并重新构建选项
+            optionsContainer.innerHTML = '';
+            currentItem.options.forEach(opt => {
+                const isSelected = userAnswers[index] && userAnswers[index].label === opt.label;
+                const button = document.createElement("button");
+                button.className = `w-full text-left p-4 transition-all duration-200 border flex items-start gap-3.5 group relative ${
+                    isSelected 
+                        ? 'border-white bg-white/10 text-white' 
+                        : 'border-white/10 bg-white/[0.02] hover:border-white/40 hover:bg-white/[0.05] text-neutral-300'
+                }`;
+
+                button.innerHTML = `
+                    <span class="w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 border tabular-nums ${
+                        isSelected 
+                            ? 'border-white bg-white text-black' 
+                            : 'border-white/20 text-neutral-400 group-hover:border-white/50 group-hover:text-white'
+                    }">
+                        ${opt.label}
+                    </span>
+                    <span class="text-sm font-normal pt-0.5 flex-1 leading-relaxed">
+                        ${opt.text}
+                    </span>
+                    <span class="text-[11px] text-neutral-400 shrink-0 pt-0.5 opacity-75 tabular-nums">
+                        +${opt.score}
+                    </span>
+                `;
+
+                button.addEventListener("click", () => handleSelectOption(opt));
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // 选项选择与题目切换控制器
+        function handleSelectOption(option) {
+            if (isTransitioning) return;
+            userAnswers[currentIndex] = option;
+
+            // 视觉反馈高亮
+            renderQuestion(currentIndex);
+
+            // 如果是最后一题，进入结果展示
+            if (currentIndex >= quizData.length - 1) {
+                isTransitioning = true;
+                setTimeout(() => {
+                    showResult();
+                    isTransitioning = false;
+                }, 280);
+                return;
+            }
+
+            // 否则执行平滑模糊淡出再淡入
+            isTransitioning = true;
+            animWrapper.classList.remove('ios-blur-fade-enter');
+            animWrapper.classList.add('ios-blur-fade-exit');
+
+            setTimeout(() => {
+                currentIndex++;
+                renderQuestion(currentIndex);
+                animWrapper.classList.remove('ios-blur-fade-exit');
+                animWrapper.classList.add('ios-blur-fade-enter');
+                isTransitioning = false;
+            }, 250);
+        }
+
+        // 上一题逻辑
+        btnPrev.addEventListener("click", () => {
+            if (currentIndex > 0 && !isTransitioning) {
+                isTransitioning = true;
+                animWrapper.classList.remove('ios-blur-fade-enter');
+                animWrapper.classList.add('ios-blur-fade-exit');
+
+                setTimeout(() => {
+                    currentIndex--;
+                    renderQuestion(currentIndex);
+                    animWrapper.classList.remove('ios-blur-fade-exit');
+                    animWrapper.classList.add('ios-blur-fade-enter');
+                    isTransitioning = false;
+                }, 200);
+            }
+        });
+
+        // 最终结果计算与严格格式填充
+        function showResult() {
+            quizScreen.classList.add("hidden");
+            resultScreen.classList.remove("hidden");
+            resultScreen.classList.add("ios-blur-fade-enter");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // 1. 计算总分 (0 - 150)
+            const totalScore = userAnswers.reduce((sum, item) => sum + (item ? item.score : 0), 0);
+
+            // 2. 匹配得分档位
+            const currentTier = tierDefinitions.find(t => totalScore >= t.minScore && totalScore <= t.maxScore) || tierDefinitions[0];
+
+            // 3. 严格按照规定排版填充：
+            // [分数文本]
+            // [层次]
+            // ---
+            // [总结]
+            const scoreText = `${totalScore} / 150 分`;
+            const tierText = currentTier.tierName;
+            const summaryText = currentTier.summary;
+
+            document.getElementById("result-score-text").textContent = scoreText;
+            document.getElementById("result-tier-text").textContent = tierText;
+            document.getElementById("result-summary-text").textContent = summaryText;
+
+            // 标尺指示器更新
+            document.getElementById("tier-rank-badge").textContent = `Level ${currentTier.level} / Tier ${currentTier.minScore}-${currentTier.maxScore}`;
+            for (let i = 1; i <= 5; i++) {
+                const el = document.getElementById(`spec-${i}`);
+                if (i === currentTier.level) {
+                    el.className = "h-full flex-1 pride-bar shadow-sm";
+                } else if (i < currentTier.level) {
+                    el.className = "h-full flex-1 bg-neutral-700/60";
+                } else {
+                    el.className = "h-full flex-1 bg-neutral-900";
+                }
+            }
+
+            // 保存最终的标准格式文本到数据属性以供直接复制
+            resultScreen.dataset.standardResult = `${scoreText}\n${tierText}\n---\n${summaryText}`;
+            
+            // 缓存给图片导出生成器
+            cachedResultData = {
+                scoreText: scoreText,
+                tierText: tierText,
+                summaryText: summaryText,
+                totalScore: totalScore,
+                tier: currentTier
+            };
+        }
+
+        // 计算 5 个维度的雷达指标（每维度 5 题，满分 30 分）
+        function calculateDimensions(answers) {
+            // 维度 1: 肉欲本能 Libido (Q1 打飞机, Q2 性幻想, Q15 伴侣数, Q19 粗话调情, Q24 肉体自信)
+            const dim1Indices = [0, 1, 14, 18, 23];
+            // 维度 2: 尺度解放 Openness (Q3 真空出行, Q4 私密照频率, Q5 面对私照, Q8 公共暴露, Q20 肢体语言)
+            const dim2Indices = [2, 3, 4, 7, 19];
+            // 维度 3: 社交狩猎 Hunting (Q6 软件状态, Q7 推特属性, Q14 上床速度, Q16 派对狂欢, Q21 闺蜜密谈)
+            const dim3Indices = [5, 6, 13, 15, 20];
+            // 维度 4: 猎奇探索 Kink & Toys (Q10 多人运动, Q12 性具道具, Q13 特殊癖好, Q22 角色扮演, Q23 连麦网黄)
+            const dim4Indices = [9, 11, 12, 21, 22];
+            // 维度 5: 野性解脱 Wild Freedom (Q9 非常规场所, Q11 视频拍摄, Q17 暗室桑拿, Q18 体位探索, Q25 狂欢哲学)
+            const dim5Indices = [8, 10, 16, 17, 24];
+
+            const getScore = (indices) => indices.reduce((sum, idx) => sum + (answers[idx] ? answers[idx].score : 0), 0);
+
+            return [
+                { name: "肉欲本能", en: "LIBIDO DRIVE", score: getScore(dim1Indices), max: 30 },
+                { name: "尺度解放", en: "OPENNESS", score: getScore(dim2Indices), max: 30 },
+                { name: "社交狩猎", en: "HUNTING CHARM", score: getScore(dim3Indices), max: 30 },
+                { name: "猎奇探索", en: "KINK & PLAY", score: getScore(dim4Indices), max: 30 },
+                { name: "野性解脱", en: "WILD FREEDOM", score: getScore(dim5Indices), max: 30 }
+            ];
+        }
+
+        // Canvas 文本按最大宽度换行拆分函数
+        function wrapCanvasText(ctx, text, maxWidth) {
+            const lines = [];
+            const paragraphs = text.split('\n');
+            for (let p of paragraphs) {
+                if (!p.trim()) {
+                    lines.push('');
+                    continue;
+                }
+                let currentLine = '';
+                for (let i = 0; i < p.length; i++) {
+                    const char = p[i];
+                    const testLine = currentLine + char;
+                    const metrics = ctx.measureText(testLine);
+                    if (metrics.width > maxWidth && currentLine.length > 0) {
+                        lines.push(currentLine);
+                        currentLine = char;
+                    } else {
+                        currentLine = testLine;
+                    }
+                }
+                if (currentLine) {
+                    lines.push(currentLine);
+                }
+            }
+            return lines;
+        }
+
+        // 绘制海报四角直角切角标记
+        function drawCornerBrackets(ctx, x, y, w, h, size, strokeWidth, color) {
+            ctx.save();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = strokeWidth;
+            // Top-Left
+            ctx.beginPath();
+            ctx.moveTo(x, y + size); ctx.lineTo(x, y); ctx.lineTo(x + size, y);
+            ctx.stroke();
+            // Top-Right
+            ctx.beginPath();
+            ctx.moveTo(x + w - size, y); ctx.lineTo(x + w, y); ctx.lineTo(x + w, y + size);
+            ctx.stroke();
+            // Bottom-Left
+            ctx.beginPath();
+            ctx.moveTo(x, y + h - size); ctx.lineTo(x, y + h); ctx.lineTo(x + size, y + h);
+            ctx.stroke();
+            // Bottom-Right
+            ctx.beginPath();
+            ctx.moveTo(x + w - size, y + h); ctx.lineTo(x + w, y + h); ctx.lineTo(x + w, y + h - size);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        // 绘制拟真数字防伪矩阵码图形
+        function drawMatrixGlyph(ctx, x, y, size) {
+            ctx.save();
+            const cols = 7;
+            const cellSize = size / cols;
+            // 固定伪随机图样
+            const pattern = [
+                1,1,1,1,1,1,1,
+                1,0,0,0,0,0,1,
+                1,0,1,1,1,0,1,
+                1,0,1,0,1,0,1,
+                1,0,1,1,1,0,1,
+                1,0,0,0,0,0,1,
+                1,1,1,1,1,1,1
+            ];
+            for (let r = 0; r < cols; r++) {
+                for (let c = 0; c < cols; c++) {
+                    const isFilled = pattern[r * cols + c];
+                    ctx.fillStyle = isFilled ? "rgba(255, 255, 255, 0.85)" : "rgba(255, 255, 255, 0.08)";
+                    ctx.fillRect(x + c * cellSize, y + r * cellSize, cellSize - 1.5, cellSize - 1.5);
+                }
+            }
+            ctx.restore();
+        }
+
+        // 绘制官方彩虹徽章印章
+        function drawOfficialSeal(ctx, cx, cy, radius, prideGrad) {
+            ctx.save();
+            // 外圈细双环
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.strokeStyle = prideGrad;
+            ctx.lineWidth = 3.5;
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius - 8, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // 内部文字与几何元素
+            ctx.font = "700 16px 'Google Sans', Inter, MiSans, sans-serif";
+            ctx.fillStyle = "#A1A1AA";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("QUEER SPECTRUM", cx, cy - 20);
+
+            ctx.font = "800 24px 'Google Sans', Inter, MiSans, sans-serif";
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillText("2026", cx, cy + 6);
+
+            ctx.font = "600 14px 'Google Sans', Inter, MiSans, sans-serif";
+            ctx.fillStyle = "#71717A";
+            ctx.fillText("OFFICIAL DOSSIER", cx, cy + 28);
+            ctx.restore();
+        }
+
+        // 渲染 2160 × 3840 规格的独立精美海报 (Editorial Queer Dossier)
+        async function generate2160x3840Poster() {
+            if (!cachedResultData) return;
+
+            // 确保网络字体完全加载解析完成
+            if (document.fonts && document.fonts.ready) {
+                await document.fonts.ready;
+            }
+
+            const canvas = document.createElement("canvas");
+            canvas.width = 2160;
+            canvas.height = 3840;
+            const ctx = canvas.getContext("2d");
+
+            const fontStack = "'Google Sans', Inter, MiSans, 'Noto Sans SC', sans-serif";
+
+            // 1. 深度黑曜夜色底色 (#070709)
+            ctx.fillStyle = "#070709";
+            ctx.fillRect(0, 0, 2160, 3840);
+
+            // 2. 绘制多层弥散彩虹光环 (Pride Aura Spheres)
+            const drawGlow = (x, y, r, colorStart, colorEnd) => {
+                const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+                g.addColorStop(0, colorStart);
+                g.addColorStop(1, colorEnd);
+                ctx.fillStyle = g;
+                ctx.fillRect(x - r, y - r, r * 2, r * 2);
+            };
+
+            // 顶部紫红光晕
+            drawGlow(400, 700, 900, "rgba(115, 41, 130, 0.16)", "rgba(7, 7, 9, 0)");
+            // 中部暖橙金光晕
+            drawGlow(1800, 1100, 850, "rgba(255, 140, 0, 0.12)", "rgba(7, 7, 9, 0)");
+            // 底部深蓝与翠绿光晕
+            drawGlow(600, 2700, 1000, "rgba(0, 128, 38, 0.10)", "rgba(7, 7, 9, 0)");
+            drawGlow(1600, 3300, 950, "rgba(36, 64, 142, 0.14)", "rgba(7, 7, 9, 0)");
+
+            // 3. 极细微高定网格点阵底纹 (Subtle Architectural Dots)
+            ctx.fillStyle = "rgba(255, 255, 255, 0.05)";
+            for (let x = 120; x < 2040; x += 120) {
+                for (let y = 120; y < 3720; y += 120) {
+                    ctx.fillRect(x - 1, y - 1, 2, 2);
+                }
+            }
+
+            // 4. 创建 PRIDE 彩虹色带渐变
+            const prideGrad = ctx.createLinearGradient(120, 0, 2040, 0);
+            prideGrad.addColorStop(0.00, "#E40303");
+            prideGrad.addColorStop(0.16, "#FF8C00");
+            prideGrad.addColorStop(0.33, "#FFED00");
+            prideGrad.addColorStop(0.50, "#008026");
+            prideGrad.addColorStop(0.66, "#24408E");
+            prideGrad.addColorStop(0.83, "#732982");
+            prideGrad.addColorStop(1.00, "#E40303");
+
+            // 5. 海报外框系统与直角装饰标尺
+            const padX = 120;
+            const padY = 120;
+            const fullW = 2160 - padX * 2; // 1920
+            const fullH = 3840 - padY * 2; // 3600
+
+            // 外围细边框
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.14)";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(padX, padY, fullW, fullH);
+
+            // 顶部 PRIDE 亮条
+            ctx.fillStyle = prideGrad;
+            ctx.fillRect(padX, padY, fullW, 10);
+
+            // 四角精密工业切角标
+            drawCornerBrackets(ctx, padX, padY, fullW, fullH, 44, 4, "#FFFFFF");
+
+            // 6. 顶部元信息标头 (Editorial Dossier Header)
+            let curY = padY + 70;
+
+            // 档案分类与标签
+            ctx.save();
+            ctx.font = `600 26px ${fontStack}`;
+            ctx.letterSpacing = "6px";
+            ctx.fillStyle = "#71717A";
+            ctx.textAlign = "left";
+            ctx.fillText("CLASSIFIED DOSSIER // SPECTRUM LABS 2026", padX + 50, curY);
+
+            ctx.textAlign = "right";
+            ctx.fillStyle = prideGrad;
+            ctx.fillText("VERIFIED QUEER ARCHIVE", padX + fullW - 50, curY);
+            ctx.restore();
+
+            // 主标题
+            curY += 90;
+            ctx.save();
+            ctx.font = `800 78px ${fontStack}`;
+            ctx.letterSpacing = "3px";
+            ctx.fillStyle = "#FFFFFF";
+            ctx.textAlign = "left";
+            ctx.fillText("男同性恋淫荡程度综合测评报告", padX + 50, curY);
+
+            // 副标题与定位
+            curY += 56;
+            ctx.font = `400 32px ${fontStack}`;
+            ctx.letterSpacing = "1.5px";
+            ctx.fillStyle = "#A1A1AA";
+            ctx.fillText("ADULT PSYCHOSEXUAL PROFILE & PLAYFULNESS QUOTIENT", padX + 50, curY);
+
+            // 顶部分割横线及十字准星
+            curY += 50;
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.16)";
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(padX + 50, curY);
+            ctx.lineTo(padX + fullW - 50, curY);
+            ctx.stroke();
+
+            // 十字准星装饰
+            ctx.font = `300 24px ${fontStack}`;
+            ctx.fillStyle = "#71717A";
+            ctx.textAlign = "center";
+            ctx.fillText("+", padX + 50, curY + 6);
+            ctx.fillText("+", padX + fullW - 50, curY + 6);
+            ctx.restore();
+
+            // 7. Hero 数据面板：左侧巨型总分 + 右侧五维蛛网雷达图
+            const heroBoxY = curY + 36;
+            const heroBoxH = 720;
+            const heroBoxW = fullW - 100;
+            const heroBoxX = padX + 50;
+
+            // 纯黑玻璃背景
+            ctx.fillStyle = "rgba(18, 18, 22, 0.65)";
+            ctx.fillRect(heroBoxX, heroBoxY, heroBoxW, heroBoxH);
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(heroBoxX, heroBoxY, heroBoxW, heroBoxH);
+            drawCornerBrackets(ctx, heroBoxX, heroBoxY, heroBoxW, heroBoxH, 24, 3, "rgba(255, 255, 255, 0.5)");
+
+            // --- 左侧：核心指数与全网击败率 ---
+            const leftColX = heroBoxX + 70;
+            let leftY = heroBoxY + 90;
+
+            ctx.save();
+            ctx.font = `600 26px ${fontStack}`;
+            ctx.letterSpacing = "4px";
+            ctx.fillStyle = "#71717A";
+            ctx.fillText("PSYCHOSEXUAL SPECTRUM SCORE", leftColX, leftY);
+
+            leftY += 150;
+            ctx.font = `900 170px ${fontStack}`;
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillText(String(cachedResultData.totalScore), leftColX, leftY);
+
+            const scoreWidth = ctx.measureText(String(cachedResultData.totalScore)).width;
+            ctx.font = `500 44px ${fontStack}`;
+            ctx.fillStyle = "#71717A";
+            ctx.fillText("/ 150 PTS", leftColX + scoreWidth + 24, leftY - 20);
+
+            // 欲望梯级铭牌
+            leftY += 90;
+            const badgeW = 380;
+            const badgeH = 56;
+            ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
+            ctx.fillRect(leftColX, leftY, badgeW, badgeH);
+            ctx.strokeStyle = prideGrad;
+            ctx.lineWidth = 2;
+            ctx.strokeRect(leftColX, leftY, badgeW, badgeH);
+
+            ctx.font = `700 24px ${fontStack}`;
+            ctx.fillStyle = "#FFFFFF";
+            ctx.textAlign = "center";
+            ctx.fillText(`LEVEL ${cachedResultData.tier.level} · TIER CLASSIFICATION`, leftColX + badgeW / 2, leftY + 36);
+
+            // 全网击败率算法
+            leftY += 96;
+            ctx.textAlign = "left";
+            const percentile = Math.min(99.6, Math.max(2.4, ((cachedResultData.totalScore / 150) * 98.4 + 1.2).toFixed(1)));
+            ctx.font = `500 32px ${fontStack}`;
+            ctx.fillStyle = "#A1A1AA";
+            ctx.fillText("综合战力超越圈内 ", leftColX, leftY);
+
+            const preTextWidth = ctx.measureText("综合战力超越圈内 ").width;
+            ctx.font = `800 38px ${fontStack}`;
+            ctx.fillStyle = prideGrad;
+            ctx.fillText(`${percentile}%`, leftColX + preTextWidth, leftY);
+
+            const pctWidth = ctx.measureText(`${percentile}%`).width;
+            ctx.font = `500 32px ${fontStack}`;
+            ctx.fillStyle = "#A1A1AA";
+            ctx.fillText(" 的受测基友", leftColX + preTextWidth + pctWidth, leftY);
+
+            leftY += 46;
+            ctx.font = `400 24px ${fontStack}`;
+            ctx.fillStyle = "#71717A";
+            ctx.fillText("基于 25 项真实成年同志涉猎度行为模型量化测算", leftColX, leftY);
+            ctx.restore();
+
+            // --- 右侧：五维蛛网雷达图 (5-Dimension Radar Chart) ---
+            const radarCenterX = heroBoxX + heroBoxW - 440;
+            const radarCenterY = heroBoxY + heroBoxH / 2 + 10;
+            const radarRadius = 210;
+            const dimensions = calculateDimensions(userAnswers);
+            const numAxes = dimensions.length;
+
+            ctx.save();
+            // 绘制同心五边形标尺刻度
+            const rings = 5;
+            for (let r = 1; r <= rings; r++) {
+                const currentR = (radarRadius / rings) * r;
+                ctx.beginPath();
+                for (let a = 0; a < numAxes; a++) {
+                    const angle = (Math.PI * 2 / numAxes) * a - Math.PI / 2;
+                    const vx = radarCenterX + currentR * Math.cos(angle);
+                    const vy = radarCenterY + currentR * Math.sin(angle);
+                    if (a === 0) ctx.moveTo(vx, vy);
+                    else ctx.lineTo(vx, vy);
+                }
+                ctx.closePath();
+                ctx.strokeStyle = (r === rings) ? "rgba(255, 255, 255, 0.25)" : "rgba(255, 255, 255, 0.08)";
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            }
+
+            // 绘制 5 根轴线
+            for (let a = 0; a < numAxes; a++) {
+                const angle = (Math.PI * 2 / numAxes) * a - Math.PI / 2;
+                const ax = radarCenterX + radarRadius * Math.cos(angle);
+                const ay = radarCenterY + radarRadius * Math.sin(angle);
+                ctx.beginPath();
+                ctx.moveTo(radarCenterX, radarCenterY);
+                ctx.lineTo(ax, ay);
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // 轴外标签
+                const labelDist = radarRadius + 50;
+                const lx = radarCenterX + labelDist * Math.cos(angle);
+                const ly = radarCenterY + labelDist * Math.sin(angle);
+
+                ctx.font = `600 24px ${fontStack}`;
+                ctx.fillStyle = "#E4E4E7";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(dimensions[a].name, lx, ly - 12);
+
+                ctx.font = `500 20px ${fontStack}`;
+                ctx.fillStyle = prideGrad;
+                const dimPercent = Math.round((dimensions[a].score / dimensions[a].max) * 100);
+                ctx.fillText(`${dimPercent}%`, lx, ly + 14);
+            }
+
+            // 绘制用户多边形数据填充区
+            ctx.beginPath();
+            for (let a = 0; a < numAxes; a++) {
+                const val = dimensions[a].score / dimensions[a].max;
+                const currentR = radarRadius * Math.max(0.15, val);
+                const angle = (Math.PI * 2 / numAxes) * a - Math.PI / 2;
+                const vx = radarCenterX + currentR * Math.cos(angle);
+                const vy = radarCenterY + currentR * Math.sin(angle);
+                if (a === 0) ctx.moveTo(vx, vy);
+                else ctx.lineTo(vx, vy);
+            }
+            ctx.closePath();
+            ctx.fillStyle = "rgba(255, 255, 255, 0.18)";
+            ctx.fill();
+            ctx.strokeStyle = prideGrad;
+            ctx.lineWidth = 3.5;
+            ctx.stroke();
+
+            // 绘制雷达各顶点高亮节点
+            for (let a = 0; a < numAxes; a++) {
+                const val = dimensions[a].score / dimensions[a].max;
+                const currentR = radarRadius * Math.max(0.15, val);
+                const angle = (Math.PI * 2 / numAxes) * a - Math.PI / 2;
+                const vx = radarCenterX + currentR * Math.cos(angle);
+                const vy = radarCenterY + currentR * Math.sin(angle);
+
+                ctx.beginPath();
+                ctx.arc(vx, vy, 7, 0, Math.PI * 2);
+                ctx.fillStyle = "#FFFFFF";
+                ctx.fill();
+                ctx.strokeStyle = "#08080A";
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            // 8. 严格遵守排版结构的测评结果报告区：
+            // [分数文本]
+            // [层次]
+            // ---
+            // [总结]
+            const resultBoxY = heroBoxY + heroBoxH + 40;
+            const resultBoxW = fullW - 100;
+            const resultBoxH = 1580;
+            const resultBoxX = padX + 50;
+
+            // 纯黑通透玻璃面板容器
+            ctx.fillStyle = "rgba(14, 14, 18, 0.72)";
+            ctx.fillRect(resultBoxX, resultBoxY, resultBoxW, resultBoxH);
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.16)";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(resultBoxX, resultBoxY, resultBoxW, resultBoxH);
+            drawCornerBrackets(ctx, resultBoxX, resultBoxY, resultBoxW, resultBoxH, 30, 4, "#FFFFFF");
+
+            // 卡片顶部条目栏
+            let inResY = resultBoxY + 70;
+            ctx.save();
+            ctx.font = `600 24px ${fontStack}`;
+            ctx.letterSpacing = "4px";
+            ctx.fillStyle = "#71717A";
+            ctx.textAlign = "left";
+            ctx.fillText("OFFICIAL EVALUATION OUTPUT // 标准排版输出", resultBoxX + 70, inResY);
+
+            ctx.textAlign = "right";
+            ctx.fillStyle = prideGrad;
+            ctx.fillText("STRUCTURE COMPLIANT", resultBoxX + resultBoxW - 70, inResY);
+
+            // 卡片顶部分割细线
+            inResY += 36;
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.10)";
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(resultBoxX + 70, inResY);
+            ctx.lineTo(resultBoxX + resultBoxW - 70, inResY);
+            ctx.stroke();
+            ctx.restore();
+
+            // --- 结构 1：[分数文本] ---
+            inResY += 80;
+            ctx.save();
+            ctx.font = `600 26px ${fontStack}`;
+            ctx.fillStyle = "#A1A1AA";
+            ctx.letterSpacing = "3px";
+            ctx.fillText("[ 分数文本 ]", resultBoxX + 70, inResY);
+
+            inResY += 90;
+            ctx.font = `900 96px ${fontStack}`;
+            ctx.fillStyle = "#FFFFFF";
+            ctx.letterSpacing = "1px";
+            ctx.fillText(cachedResultData.scoreText, resultBoxX + 70, inResY);
+
+            // --- 结构 2：[层次] ---
+            inResY += 96;
+            ctx.font = `600 26px ${fontStack}`;
+            ctx.fillStyle = "#A1A1AA";
+            ctx.letterSpacing = "3px";
+            ctx.fillText("[ 层次 ]", resultBoxX + 70, inResY);
+
+            inResY += 76;
+            ctx.font = `800 62px ${fontStack}`;
+            ctx.fillStyle = prideGrad;
+            ctx.letterSpacing = "1.5px";
+            ctx.fillText(cachedResultData.tierText, resultBoxX + 70, inResY);
+
+            // --- 结构 3：--- 分割线 ---
+            inResY += 60;
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.30)";
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(resultBoxX + 70, inResY);
+            ctx.lineTo(resultBoxX + resultBoxW - 70, inResY);
+            ctx.stroke();
+
+            // 分割线标识文字 (---)
+            ctx.font = `700 20px ${fontStack}`;
+            ctx.fillStyle = "#71717A";
+            ctx.textAlign = "center";
+            ctx.fillText("---", (resultBoxX + 70 + resultBoxX + resultBoxW - 70) / 2, inResY - 14);
+
+            // --- 结构 4：[总结] ---
+            inResY += 80;
+            ctx.textAlign = "left";
+            ctx.font = `600 26px ${fontStack}`;
+            ctx.fillStyle = "#A1A1AA";
+            ctx.letterSpacing = "3px";
+            ctx.fillText("[ 总结 ]", resultBoxX + 70, inResY);
+
+            inResY += 76;
+            ctx.font = `400 44px ${fontStack}`;
+            ctx.fillStyle = "#E4E4E7";
+            const textWrapWidth = resultBoxW - 140;
+            const summaryLines = wrapCanvasText(ctx, cachedResultData.summaryText, textWrapWidth);
+            const lineHeight = 80;
+
+            for (let line of summaryLines) {
+                ctx.fillText(line, resultBoxX + 70, inResY);
+                inResY += lineHeight;
+            }
+            ctx.restore();
+
+            // 9. 欲望全景标尺分布 (Spectrum Distribution Matrix)
+            const specBoxY = resultBoxY + resultBoxH + 40;
+            const specBoxW = fullW - 100;
+            const specBoxH = 340;
+            const specBoxX = padX + 50;
+
+            ctx.save();
+            ctx.fillStyle = "rgba(18, 18, 22, 0.65)";
+            ctx.fillRect(specBoxX, specBoxY, specBoxW, specBoxH);
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(specBoxX, specBoxY, specBoxW, specBoxH);
+            drawCornerBrackets(ctx, specBoxX, specBoxY, specBoxW, specBoxH, 20, 2.5, "rgba(255, 255, 255, 0.4)");
+
+            let specInnerY = specBoxY + 56;
+            ctx.font = `600 24px ${fontStack}`;
+            ctx.letterSpacing = "3px";
+            ctx.fillStyle = "#71717A";
+            ctx.textAlign = "left";
+            ctx.fillText("DESIRE SPECTRUM BENCHMARK // 欲望梯级分布标尺", specBoxX + 60, specInnerY);
+
+            ctx.textAlign = "right";
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillText(`CURRENT POSITION: LEVEL ${cachedResultData.tier.level}`, specBoxX + specBoxW - 60, specInnerY);
+
+            // 5 档位色条与文字说明
+            specInnerY += 50;
+            const segW = (specBoxW - 120) / 5;
+            const barHeight = 24;
+            const tierNames = [
+                "0-30 禁欲小白兔",
+                "31-60 邻家保守派",
+                "61-90 进退轻熟派",
+                "91-120 火力全开",
+                "121-150 肉欲大魔王"
+            ];
+
+            for (let i = 1; i <= 5; i++) {
+                const segX = specBoxX + 60 + (i - 1) * segW;
+                const isCurrent = (i === cachedResultData.tier.level);
+
+                if (isCurrent) {
+                    ctx.fillStyle = prideGrad;
+                } else if (i < cachedResultData.tier.level) {
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.28)";
+                } else {
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
+                }
+                ctx.fillRect(segX, specInnerY, segW - 6, barHeight);
+
+                // 档位文本
+                ctx.font = isCurrent ? `700 24px ${fontStack}` : `500 22px ${fontStack}`;
+                ctx.textAlign = "center";
+                ctx.fillStyle = isCurrent ? "#FFFFFF" : "#71717A";
+                ctx.fillText(tierNames[i - 1], segX + (segW - 6) / 2, specInnerY + 64);
+
+                // 当前档位指示箭头
+                if (isCurrent) {
+                    ctx.font = `700 20px ${fontStack}`;
+                    ctx.fillStyle = prideGrad;
+                    ctx.fillText("▲ YOUR TIER", segX + (segW - 6) / 2, specInnerY - 14);
+                }
+            }
+            ctx.restore();
+
+            // 10. 底部认证戳印与声明 (Editorial Seals & Footer)
+            const footerY = specBoxY + specBoxH + 50;
+
+            // 左侧：数字防伪矩阵码
+            drawMatrixGlyph(ctx, padX + 50, footerY + 20, 110);
+
+            // 中间：版权与身心健康声明
+            ctx.save();
+            ctx.font = `600 26px ${fontStack}`;
+            ctx.letterSpacing = "2px";
+            ctx.fillStyle = "#A1A1AA";
+            ctx.textAlign = "left";
+            ctx.fillText("© 2026 男同性恋淫荡程度综合测评系统 · PRIDE SPECTRUM LABS", padX + 190, footerY + 48);
+
+            ctx.font = `400 24px ${fontStack}`;
+            ctx.fillStyle = "#71717A";
+            ctx.fillText("倡导多元平等、知情同意与身心健康安全 · 本地安全离线加密生成", padX + 190, footerY + 86);
+
+            ctx.font = `400 20px ${fontStack}`;
+            ctx.fillStyle = "#52525B";
+            ctx.fillText(`DOCUMENT HASH: SHA256-${Date.now().toString(16).toUpperCase()}-QS · RESOLUTION 2160×3840 UHD`, padX + 190, footerY + 120);
+            ctx.restore();
+
+            // 右侧：官方圆形认证印章
+            drawOfficialSeal(ctx, padX + fullW - 120, footerY + 75, 68, prideGrad);
+
+            // 11. 高质量输出为 2160x3840 的 JPG 格式 Blob 与 DataURL
+            return new Promise((resolve) => {
+                canvas.toBlob((blob) => {
+                    const dataUrl = canvas.toDataURL("image/jpeg", 0.95);
+                    resolve({ blob, dataUrl });
+                }, "image/jpeg", 0.95);
+            });
+        }
+
+        // 触发下载海报图片
+        function triggerPosterDownload(dataUrl) {
+            const fileName = `Gay_Lust_Spectrum_Poster_2160x3840_${Date.now()}.jpg`;
+            const downloadLink = document.createElement("a");
+            downloadLink.download = fileName;
+            downloadLink.href = dataUrl;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        // 处理海报导出点击
+        async function handleExportPoster() {
+            if (!cachedResultData) return;
+
+            btnExportImage.disabled = true;
+            btnExportText.textContent = "生成高清海报中...";
+
+            try {
+                const { blob, dataUrl } = await generate2160x3840Poster();
+                currentPosterBlob = blob;
+                currentPosterDataUrl = dataUrl;
+
+                // 1. 设置预览图
+                posterPreviewImg.src = dataUrl;
+
+                // 2. 尝试自动下载
+                triggerPosterDownload(dataUrl);
+
+                // 3. 打开弹窗供长按/手动保存
+                posterModal.classList.remove("hidden");
+
+                showToast("2160×3840 独立高定海报已生成");
+            } catch (err) {
+                console.error("生成海报异常:", err);
+                showToast("海报生成失败，请稍后重试");
+            } finally {
+                btnExportImage.disabled = false;
+                btnExportText.textContent = "导出海报 (2160×3840 JPG)";
+            }
+        }
+
+        // 弹窗关闭事件
+        btnCloseModal.addEventListener("click", () => {
+            posterModal.classList.add("hidden");
+        });
+        btnDismissModal.addEventListener("click", () => {
+            posterModal.classList.add("hidden");
+        });
+        posterModal.addEventListener("click", (e) => {
+            if (e.target === posterModal) {
+                posterModal.classList.add("hidden");
+            }
+        });
+        btnDownloadAgain.addEventListener("click", () => {
+            if (currentPosterDataUrl) {
+                triggerPosterDownload(currentPosterDataUrl);
+                showToast("已再次触发海报下载");
+            }
+        });
+
+        // 剪贴板复制功能（使用安全的 document.execCommand 方案，保证 iframe 兼容性）
+        function copyStandardReport() {
+            const content = resultScreen.dataset.standardResult;
+            if (!content) return;
+
+            const tempTextArea = document.createElement("textarea");
+            tempTextArea.value = content;
+            tempTextArea.style.position = "fixed";
+            tempTextArea.style.opacity = "0";
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast("标准测评结果已复制到剪贴板");
+                } else {
+                    showToast("复制失败，请手动截屏保存");
+                }
+            } catch (err) {
+                showToast("环境不支持自动复制，请手动截屏");
+            } finally {
+                document.body.removeChild(tempTextArea);
+            }
+        }
+
+        // 自定义 Toast 提示工具（严禁 alert）
+        let toastTimer = null;
+        function showToast(msg) {
+            toastText.textContent = msg;
+            toastEl.classList.remove("opacity-0");
+            toastEl.classList.add("opacity-100");
+
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toastEl.classList.remove("opacity-100");
+                toastEl.classList.add("opacity-0");
+            }, 2600);
+        }
+
+        // 重测逻辑
+        function resetQuiz() {
+            currentIndex = 0;
+            userAnswers = new Array(quizData.length).fill(null);
+            resultScreen.classList.add("hidden");
+            quizScreen.classList.remove("hidden");
+            renderQuestion(0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 事件监听初始化
+        btnStart.addEventListener("click", () => {
+            introScreen.classList.add("hidden");
+            quizScreen.classList.remove("hidden");
+            renderQuestion(0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        btnCopyResult.addEventListener("click", copyStandardReport);
+        btnRestart.addEventListener("click", resetQuiz);
+        btnExportImage.addEventListener("click", handleExportPoster);
+    </script>
+</body>
+</html>
